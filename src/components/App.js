@@ -59,10 +59,13 @@ export default connect((state) => state)(
 
         return (
           <Card key={i}>
-            <Text
-              text={item.name}
+            <Text 
               bold={true}
-            />
+              color={'Primary'}
+              fontSize={'Small'}
+            >
+              {item.name}
+            </Text>
             {payments}
             <Button
               buttonText={buttonText}
@@ -72,13 +75,6 @@ export default connect((state) => state)(
         );
       });
 
-      const style = {
-        color: 'red',
-        margin: '1em 0',
-        fontWeight: 'bold',
-        fontSize: '16px',
-        textAlign: 'center',
-      };
       const donate = this.props.donate;
       const message = this.props.message;
       const mainTitle = 'Omise Tamboon React';
@@ -89,8 +85,20 @@ export default connect((state) => state)(
             text={mainTitle}
             format={'First'}
           />
-          <p>All donations: {donate}</p>
-          <p style={style}>{message}</p>
+          <Text
+            bold={true}
+            color={'Primary'}
+            fontSize={'Medium'}
+          >
+            All donations: {donate}
+          </Text>
+          <Text
+            bold={true}
+            color={'Alert'}
+            fontSize={'Medium'}
+          >
+            {message}
+          </Text>
           {cards}
         </div>
       );
