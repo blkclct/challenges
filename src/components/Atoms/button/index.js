@@ -16,6 +16,8 @@ const DecideButton = props => {
   switch (props.buttonText) {
     case 'Pay':
       return <CommonButton onClick={() => props.callHandlePay()}>{props.buttonText}</CommonButton>;
+    case 'Donate':
+      return <CommonButton onClick={() => props.setDonateStatus()}>{props.buttonText}</CommonButton>;
     default:
       return null;
   }

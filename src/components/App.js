@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import fetch from 'isomorphic-fetch';
-import { Button } from '../components/Atoms/button/index'
-import { Text } from '../components/Atoms/typography/text'
-import { HeadLine } from '../components/Atoms/typography/head-line'
-
-import { summaryDonations } from '../helpers';
-
+import { Button } from '../components/Atoms/button/index';
+import { Text } from '../components/Atoms/typography/text';
+import { HeadLine } from '../components/Atoms/typography/head-line';
+import { DonatePayment } from '../components/Molecules/payment/donatePayment';
 
 const Card = styled.div`
   margin: 10px;
@@ -22,7 +20,23 @@ export default connect((state) => state)(
       this.state = {
         charities: [],
         selectedAmount: 10,
+        selectedDonate: false,
       };
+
+      this.setDonateAmount = this.setDonateAmount.bind(this);
+      this.setDonateStatus = this.setDonateStatus.bind(this);
+    }
+
+    setDonateAmount(amount) {
+      this.setState({
+        selectedAmount: amount,
+      });
+    }
+
+    setDonateStatus() {
+      this.setState({
+        selectedDonate: true,
+      });
     }
 
     componentDidMount() {
@@ -44,40 +58,48 @@ export default connect((state) => state)(
 
     render() {
       const self = this;
-      const buttonText = 'Pay';
-      const cards = this.state.charities.map(function(item, i) {
-        const payments = [10, 20, 50, 100, 500].map((amount, j) => (
-          <label key={j}>
-            <input
-              type="radio"
-              name="payment"
-              onClick={function() {
-                self.setState({ selectedAmount: amount })
-              }} /> {amount}
-          </label>
-        ));
-
-        return (
-          <Card key={i}>
-            <Text 
-              bold={true}
-              color={'Primary'}
-              fontSize={'Small'}
-            >
-              {item.name}
-            </Text>
-            {payments}
-            <Button
-              buttonText={buttonText}
-              callHandlePay={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}
-            />
-          </Card>
-        );
-      });
-
+      const buttonTextPay = 'Pay';
+      const buttonTextDonate = 'Donate';
+      const donateFee = [10, 20, 50, 100, 500];
       const donate = this.props.donate;
       const message = this.props.message;
       const mainTitle = 'Omise Tamboon React';
+      const cards = this.state.charities.map(function(item, i) {
+        return (
+          <Card key={i}>
+            {!self.state.selectedDonate ? (
+              <Fragment>
+                <Text
+                  bold={true}
+                  color={'Primary'}
+                  fontSize={'Small'}
+                >
+                  {item.name}
+                </Text>
+                <Button
+                  buttonText={buttonTextDonate}
+                  setDonateStatus={self.setDonateStatus}
+                />
+              </Fragment>
+            ) : (
+              <Fragment>
+                <p>Select the amount to donate (THB)</p>
+                {donateFee.map((amount, j) => (
+                  <DonatePayment
+                    key={j}
+                    amount={amount}
+                    setDonateAmount={self.setDonateAmount}
+                  />
+                ))}
+                <Button
+                  buttonText={buttonTextPay}
+                  callHandlePay={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}
+                />
+              </Fragment>
+            )}
+          </Card>
+        );
+      });
 
       return (
         <div>
