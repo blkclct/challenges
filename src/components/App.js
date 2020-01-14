@@ -133,7 +133,10 @@ function handlePay(id, amount, currency) {
   return function() {
     fetch('http://localhost:3001/payments', {
       method: 'POST',
-      body: `{ "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}" }`,
+      headers: { 'Content-type' : 'application/json' },
+      body: `{
+        "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}"
+      }`,
     })
       .then(function(resp) { return resp.json(); })
       .then(function() {
