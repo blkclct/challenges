@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import fetch from 'isomorphic-fetch';
+import { Button } from '../components/Atoms/button/index'
 
 import { summaryDonations } from '../helpers';
 
@@ -41,6 +42,7 @@ export default connect((state) => state)(
 
     render() {
       const self = this;
+      const buttonText = 'Pay';
       const cards = this.state.charities.map(function(item, i) {
         const payments = [10, 20, 50, 100, 500].map((amount, j) => (
           <label key={j}>
@@ -57,7 +59,10 @@ export default connect((state) => state)(
           <Card key={i}>
             <p>{item.name}</p>
             {payments}
-            <button onClick={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}>Pay</button>
+            <Button
+              buttonText={buttonText}
+              callHandlePay={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}
+            />
           </Card>
         );
       });
