@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import fetch from 'isomorphic-fetch';
 import { Button } from '../components/Atoms/button/index'
+import { Text } from '../components/Atoms/typography/text'
+import { HeadLine } from '../components/Atoms/typography/head-line'
 
 import { summaryDonations } from '../helpers';
 
@@ -57,7 +59,10 @@ export default connect((state) => state)(
 
         return (
           <Card key={i}>
-            <p>{item.name}</p>
+            <Text
+              text={item.name}
+              bold={true}
+            />
             {payments}
             <Button
               buttonText={buttonText}
@@ -76,10 +81,14 @@ export default connect((state) => state)(
       };
       const donate = this.props.donate;
       const message = this.props.message;
+      const mainTitle = 'Omise Tamboon React';
 
       return (
         <div>
-          <h1>Tamboon React</h1>
+          <HeadLine
+            text={mainTitle}
+            format={'First'}
+          />
           <p>All donations: {donate}</p>
           <p style={style}>{message}</p>
           {cards}
