@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
 const HeadLineFirst = styled.h1`
-  color: #e4e4e5;
+  color: #046ad9;
 `
 
 const HeadLineSecond = styled.h2`
-  color: #e4e4e5;
+  color: #046ad9;
 `
 
 const DecideHeadLine = props => {

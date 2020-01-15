@@ -22,6 +22,12 @@ const CardContainer = styled.div`
   justify-content: space-between;
   margin: 50px auto 0 auto;
   padding: 0px 30px;
+  @media (max-width: 1194px) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 const Card = styled.div`
@@ -32,6 +38,9 @@ const Card = styled.div`
   border: 1px solid #ccc;
   border-radius: 5%;
   box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 10px;
+  @media (max-width: 1194px) {
+    width: 100%;
+  }
 `;
 
 export default connect((state) => state)(
@@ -85,6 +94,7 @@ export default connect((state) => state)(
       const donateFee = [10, 20, 50, 100, 500];
       const donate = this.props.donate;
       const message = this.props.message;
+      const currency = 'THB';
       const mainTitle = 'Omise Tamboon React';
       const cards = this.state.charities.map(function(item, i) {
         return (
@@ -110,7 +120,7 @@ export default connect((state) => state)(
         <Container>
           <HeadLine text={mainTitle} format={'First'} />
           <Text bold={true} color={'Primary'} fontSize={'Medium'}>
-            All donations: {donate}
+            All donations: {donate} {currency}
           </Text>
           <Text bold={true} color={'Alert'} fontSize={'Medium'}>
             {message}

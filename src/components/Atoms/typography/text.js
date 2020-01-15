@@ -6,7 +6,7 @@ const handleColorType = color => {
     case 'Primary':
       return 'color: #003070e;';
     case 'Alert':
-      return 'color: red';
+      return 'color: red;';
     default:
       return null;
   }
@@ -27,7 +27,6 @@ const CommonText = styled.div`
   font-weight: ${ props => props.bold ? 600 : 300 };
   ${({ color }) => handleColorType(color)};
   ${({ fontSize }) => handleFontSizeType(fontSize)};
-
 `
 
 export const Text = ({
