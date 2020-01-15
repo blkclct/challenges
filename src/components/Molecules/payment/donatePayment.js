@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Box = styled.label`
+const Label = styled.label`
   margin: 0;
 `
 
@@ -15,13 +15,13 @@ const Radio = styled.input`
 
 export const DonatePayment = props => {
   return (
-    <Box>
+    <Label>
       <Radio
         type="radio"
         name="payment"
         onClick={() => {
           props.setDonateAmount(props.amount);
         }} /> {props.amount}
-    </Box>
+    </Label>
   );
 }

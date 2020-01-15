@@ -11,6 +11,11 @@ import  { DonateStatus } from '../components/Organisms/donate/donateStatus';
 const Container = styled.div`
   max-width: 1200px;
   width: 100%;
+  text-align: center;
+  margin: 0 auto;
+`
+
+const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   -webkit-box-pack: justify;
@@ -22,11 +27,47 @@ const Container = styled.div`
 const Card = styled.div`
   width: 50%;
   max-width: 540px;
+  max-height: 540px;
   margin-bottom: 50px;
   border: 1px solid #ccc;
   border-radius: 5%;
   box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 10px;
 `;
+
+const PaymentStatus = styled.div`
+  width: 540px;
+  max-width: 100%;
+  height: 420px;
+  max-height: 100%;
+`
+
+const PaymentInnerStatus = styled.div`
+  padding: 20px;
+  margin: 0 auto;
+`
+
+const PaymentCloseButton = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  font-size: 25px;
+`
+
+const PaymentInnerBox = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px;
+  margin: 0 auto;
+`
+
+const PaymentInnerText = styled.div`
+  margin: 20px 0;
+`
+
+const DonatePaymentBox = styled.div`
+  margin-bottom: 20px;
+`
 
 export default connect((state) => state)(
   class App extends Component {
@@ -91,18 +132,27 @@ export default connect((state) => state)(
               />
             ) : (
               <Fragment>
-                <p>Select the amount to donate (THB)</p>
-                {donateFee.map((amount, j) => (
-                  <DonatePayment
-                    key={j}
-                    amount={amount}
-                    setDonateAmount={self.setDonateAmount}
-                  />
-                ))}
-                <Button
-                  buttonText={buttonTextPay}
-                  callHandlePay={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}
-                />
+                <PaymentStatus>
+                  <PaymentInnerStatus>
+                    <PaymentCloseButton>×</PaymentCloseButton>
+                    <PaymentInnerBox>
+                      <PaymentInnerText>Select the amount to donate (THB)</PaymentInnerText>
+                      <DonatePaymentBox>
+                        {donateFee.map((amount, j) => (
+                          <DonatePayment
+                            key={j}
+                            amount={amount}
+                            setDonateAmount={self.setDonateAmount}
+                          />
+                        ))}
+                      </DonatePaymentBox>
+                      <Button
+                        buttonText={buttonTextPay}
+                        callHandlePay={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}
+                      />
+                    </PaymentInnerBox>
+                  </PaymentInnerStatus>
+                </PaymentStatus>
               </Fragment>
             )}
           </Card>
@@ -110,11 +160,8 @@ export default connect((state) => state)(
       });
 
       return (
-        <div>
-          <HeadLine
-            text={mainTitle}
-            format={'First'}
-          />
+        <Container>
+          <HeadLine text={mainTitle} format={'First'} />
           <Text
             bold={true}
             color={'Primary'}
@@ -129,10 +176,10 @@ export default connect((state) => state)(
           >
             {message}
           </Text>
-          <Container>
+          <CardContainer>
             {cards}
-          </Container>
-        </div>
+          </CardContainer>
+        </Container>
       );
     }
   }
