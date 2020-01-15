@@ -6,16 +6,16 @@ import styled from 'styled-components';
 
 const backgroundImageType = backgroundImage => {
   switch (backgroundImage) {
-    case 'Baan Kru Noi':
-      return 'background: url(http://0.0.0.0:3000/images/baan-kru-noi.jpg) no-repeat;';
-    case 'Habitat for Humanity Thailand':
-      return 'background: url(http://0.0.0.0:3000/images/habitat-for-humanity-thailand.jpg) no-repeat;';
-    case 'Paper Ranger':
-      return 'background: url(http://0.0.0.0:3000/images/paper-ranger.jpg) no-repeat;';
-    case 'Makhampom Theater':
-      return 'background: url(http://0.0.0.0:3000/images/makhampom-theater.jpg) no-repeat;';
-    case 'Thailand Association of the Blind':
-      return 'background: url(http://0.0.0.0:3000/images/thailand-association-of-the-blind.jpg) no-repeat;';
+    case 1:
+      return 'background: url(http://0.0.0.0:3000/images/baan-kru-noi.jpg) no-repeat top center;';
+    case 2:
+      return 'background: url(http://0.0.0.0:3000/images/habitat-for-humanity-thailand.jpg) no-repeat top center;';
+    case 3:
+      return 'background: url(http://0.0.0.0:3000/images/paper-ranger.jpg) no-repeat top center;';
+    case 4:
+      return 'background: url(http://0.0.0.0:3000/images/makhampom-theater.jpg) no-repeat top center;';
+    case 5:
+      return 'background: url(http://0.0.0.0:3000/images/thailand-association-of-the-blind.jpg) no-repeat top center;';
     default:
       return null;
   }
@@ -23,12 +23,12 @@ const backgroundImageType = backgroundImage => {
 
 const DonateBox = styled.div`
   ${({ backgroundImage }) => backgroundImageType(backgroundImage)};
-  background-size: contain;
-  padding-top: 350px;
+  background-size: 540px 300px;
+  padding-top: 300px;
   width: 100%;
   height: 100%;
-  border-top-left-radius: 5%;
-  border-top-right-radius: 5%;
+  border-top-left-radius: 3%;
+  border-top-right-radius: 3%;
 `
 
 const DonateInnerBox = styled.div`
@@ -44,7 +44,7 @@ export const DonateStatus = props => {
   return (
     <Fragment>
       {!(props.selectedDonate === (props.indexNumber + 1)) ? (
-        <DonateBox backgroundImage={props.donationName}>
+        <DonateBox backgroundImage={props.donationId}>
           <DonateInnerBox>
             <Text
               bold={true}
