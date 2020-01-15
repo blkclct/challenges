@@ -1,13 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import fetch from 'isomorphic-fetch';
 import { summaryDonations } from '../utils/utils';
-import { Button } from '../components/Atoms/button/index';
 import { Text } from '../components/Atoms/typography/text';
 import { HeadLine } from '../components/Atoms/typography/head-line';
-import { DonatePayment } from '../components/Molecules/payment/donatePayment';
 import  { DonateStatus } from '../components/Organisms/donate/donateStatus';
+import { PayStatus } from '../components/Organisms/payment/paymentStatus';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -34,41 +33,6 @@ const Card = styled.div`
   border-radius: 5%;
   box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 10px;
 `;
-
-const PaymentStatus = styled.div`
-  width: 540px;
-  max-width: 100%;
-  height: 420px;
-  max-height: 100%;
-`
-
-const PaymentInnerStatus = styled.div`
-  padding: 20px;
-  margin: 0 auto;
-`
-
-const PaymentCloseButton = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  font-size: 25px;
-`
-
-const PaymentInnerBox = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  padding: 80px;
-  margin: 0 auto;
-`
-
-const PaymentInnerText = styled.div`
-  margin: 20px 0;
-`
-
-const DonatePaymentBox = styled.div`
-  margin-bottom: 20px;
-`
 
 export default connect((state) => state)(
   class App extends Component {
@@ -132,29 +96,12 @@ export default connect((state) => state)(
                 setDonateStatus={self.setDonateStatus}
               />
             ) : (
-              <Fragment>
-                <PaymentStatus>
-                  <PaymentInnerStatus>
-                    <PaymentCloseButton>×</PaymentCloseButton>
-                    <PaymentInnerBox>
-                      <PaymentInnerText>Select the amount to donate (THB)</PaymentInnerText>
-                      <DonatePaymentBox>
-                        {donateFee.map((amount, j) => (
-                          <DonatePayment
-                            key={j}
-                            amount={amount}
-                            setDonateAmount={self.setDonateAmount}
-                          />
-                        ))}
-                      </DonatePaymentBox>
-                      <Button
-                        buttonText={buttonTextPay}
-                        callHandlePay={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}
-                      />
-                    </PaymentInnerBox>
-                  </PaymentInnerStatus>
-                </PaymentStatus>
-              </Fragment>
+              <PayStatus
+                donateFee={donateFee}
+                setDonateAmount={self.setDonateAmount}
+                buttonText={buttonTextPay}
+                callHandlePay={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}
+              />
             )}
           </Card>
         );
@@ -163,18 +110,10 @@ export default connect((state) => state)(
       return (
         <Container>
           <HeadLine text={mainTitle} format={'First'} />
-          <Text
-            bold={true}
-            color={'Primary'}
-            fontSize={'Medium'}
-          >
+          <Text bold={true} color={'Primary'} fontSize={'Medium'}>
             All donations: {donate}
           </Text>
-          <Text
-            bold={true}
-            color={'Alert'}
-            fontSize={'Medium'}
-          >
+          <Text bold={true} color={'Alert'} fontSize={'Medium'}>
             {message}
           </Text>
           <CardContainer>
