@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import fetch from 'isomorphic-fetch';
+import { summaryDonations } from '../utils/utils';
 import { Button } from '../components/Atoms/button/index';
 import { Text } from '../components/Atoms/typography/text';
 import { HeadLine } from '../components/Atoms/typography/head-line';
