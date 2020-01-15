@@ -6,10 +6,26 @@ import { Button } from '../components/Atoms/button/index';
 import { Text } from '../components/Atoms/typography/text';
 import { HeadLine } from '../components/Atoms/typography/head-line';
 import { DonatePayment } from '../components/Molecules/payment/donatePayment';
+import  { DonateStatus } from '../components/Organisms/donate/donateStatus';
+
+const Container = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin: 50px auto 0 auto;
+  padding: 0px 30px;
+`
 
 const Card = styled.div`
-  margin: 10px;
+  width: 50%;
+  max-width: 540px;
+  margin-bottom: 50px;
   border: 1px solid #ccc;
+  border-radius: 5%;
+  box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 10px;
 `;
 
 export default connect((state) => state)(
@@ -68,19 +84,11 @@ export default connect((state) => state)(
         return (
           <Card key={i}>
             {!self.state.selectedDonate ? (
-              <Fragment>
-                <Text
-                  bold={true}
-                  color={'Primary'}
-                  fontSize={'Small'}
-                >
-                  {item.name}
-                </Text>
-                <Button
-                  buttonText={buttonTextDonate}
-                  setDonateStatus={self.setDonateStatus}
-                />
-              </Fragment>
+              <DonateStatus
+                donationName={item.name}
+                buttonText={buttonTextDonate}
+                setDonateStatus={self.setDonateStatus}
+              />
             ) : (
               <Fragment>
                 <p>Select the amount to donate (THB)</p>
@@ -121,7 +129,9 @@ export default connect((state) => state)(
           >
             {message}
           </Text>
-          {cards}
+          <Container>
+            {cards}
+          </Container>
         </div>
       );
     }
