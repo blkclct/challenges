@@ -43,7 +43,12 @@ export const PayStatus = props => {
     <Fragment>
       <PaymentStatus>
         <PaymentInnerStatus>
-          <PaymentCloseButton>×</PaymentCloseButton>
+          <PaymentCloseButton>
+            <Button
+              buttonText={props.buttonTextClose}
+              setDonateStatus={props.setDonateStatus}
+            />
+          </PaymentCloseButton>
           <PaymentInnerBox>
             <PaymentInnerText>Select the amount to donate (THB)</PaymentInnerText>
             <DonatePaymentBox>
@@ -56,7 +61,7 @@ export const PayStatus = props => {
               ))}
             </DonatePaymentBox>
             <Button
-              buttonText={props.buttonText}
+              buttonText={props.buttonTextPay}
               callHandlePay={props.callHandlePay}
             />
           </PaymentInnerBox>

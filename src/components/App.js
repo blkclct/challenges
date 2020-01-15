@@ -7,7 +7,6 @@ import { handlePay } from '../api/index';
 import { Text } from '../components/Atoms/typography/text';
 import { HeadLine } from '../components/Atoms/typography/head-line';
 import  { DonateStatus } from '../components/Organisms/donate/donateStatus';
-import { PayStatus } from '../components/Organisms/payment/paymentStatus';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -43,9 +42,8 @@ export default connect((state) => state)(
       this.state = {
         charities: [],
         selectedAmount: 10,
-        selectedDonate: false,
+        selectedDonate: null,
       };
-
       this.setDonateAmount = this.setDonateAmount.bind(this);
       this.setDonateStatus = this.setDonateStatus.bind(this);
     }
@@ -56,9 +54,9 @@ export default connect((state) => state)(
       });
     }
 
-    setDonateStatus() {
+    setDonateStatus(id) {
       this.setState({
-        selectedDonate: true,
+        selectedDonate: id,
       });
     }
 
@@ -83,6 +81,7 @@ export default connect((state) => state)(
       const self = this;
       const buttonTextPay = 'Pay';
       const buttonTextDonate = 'Donate';
+      const buttonTextClose = '×';
       const donateFee = [10, 20, 50, 100, 500];
       const donate = this.props.donate;
       const message = this.props.message;
@@ -90,20 +89,19 @@ export default connect((state) => state)(
       const cards = this.state.charities.map(function(item, i) {
         return (
           <Card key={i}>
-            {!self.state.selectedDonate ? (
-              <DonateStatus
-                donationName={item.name}
-                buttonText={buttonTextDonate}
-                setDonateStatus={self.setDonateStatus}
-              />
-            ) : (
-              <PayStatus
-                donateFee={donateFee}
-                setDonateAmount={self.setDonateAmount}
-                buttonText={buttonTextPay}
-                callHandlePay={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}
-              />
-            )}
+            <DonateStatus
+              indexNumber={i}
+              selectedDonate={self.state.selectedDonate}
+              donationId={item.id}
+              donationName={item.name}
+              buttonTextDonate={buttonTextDonate}
+              buttonTextClose={buttonTextClose}
+              buttonTextPay={buttonTextPay}
+              setDonateStatus={self.setDonateStatus}
+              donateFee={donateFee}
+              setDonateAmount={self.setDonateAmount}
+              callHandlePay={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}
+            />
           </Card>
         );
       });

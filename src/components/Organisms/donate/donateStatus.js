@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Button } from '../../Atoms/button/index';
 import { Text } from '../../Atoms/typography/text';
+import { PayStatus } from '../../Organisms/payment/paymentStatus';
 import styled from 'styled-components';
 
 const backgroundImageType = backgroundImage => {
@@ -42,21 +43,34 @@ const DonateInnerBox = styled.div`
 export const DonateStatus = props => {
   return (
     <Fragment>
-      <DonateBox backgroundImage={props.donationName}>
-        <DonateInnerBox>
-          <Text
-            bold={true}
-            color={'Primary'}
-            fontSize={'Small'}
-          >
-            {props.donationName}
-          </Text>
-          <Button
-            buttonText={props.buttonText}
-            setDonateStatus={props.setDonateStatus}
-          />
-        </DonateInnerBox>
-      </DonateBox>
+      {!(props.selectedDonate === (props.indexNumber + 1)) ? (
+        <DonateBox backgroundImage={props.donationName}>
+          <DonateInnerBox>
+            <Text
+              bold={true}
+              color={'Primary'}
+              fontSize={'Small'}
+            >
+              {props.donationName}
+            </Text>
+            <Button
+              buttonText={props.buttonTextDonate}
+              setDonateStatus={props.setDonateStatus}
+              donationId={props.donationId}
+            />
+          </DonateInnerBox>
+        </DonateBox>
+      ) : (
+        <PayStatus
+          donateFee={props.donateFee}
+          setDonateAmount={props.setDonateAmount}
+          buttonTextPay={props.buttonTextPay}
+          buttonTextClose={props.buttonTextClose}
+          callHandlePay={props.callHandlePay}
+          setDonateStatus={props.setDonateStatus}
+          donationId={props.donationId}
+        />
+      )}
     </Fragment>
   );
 }

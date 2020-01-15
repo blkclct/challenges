@@ -12,12 +12,24 @@ const CommonButton = styled.button`
   line-height: 1.5;
 `;
 
+const CloseButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+  font-size: 40px;
+`;
+
 const DecideButton = props => {
   switch (props.buttonText) {
     case 'Pay':
       return <CommonButton onClick={() => props.callHandlePay()}>{props.buttonText}</CommonButton>;
     case 'Donate':
-      return <CommonButton onClick={() => props.setDonateStatus()}>{props.buttonText}</CommonButton>;
+      return <CommonButton onClick={() => props.setDonateStatus(props.donationId)}>{props.buttonText}</CommonButton>;
+    case '×':
+      return <CloseButton onClick={() => props.setDonateStatus(null)}>{props.buttonText}</CloseButton>;
     default:
       return null;
   }
