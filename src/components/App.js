@@ -69,16 +69,21 @@ export default connect((state) => state)(
       });
     }
 
+    setCharityList(data) {
+      this.setState({
+        charities: data,
+      });
+    }
+
     componentDidMount() {
       const self = this;
       fetch('http://localhost:3001/charities')
-        .then(function(resp) { return resp.json(); })
-        .then(function(data) {
-          self.setState({ charities: data }) });
+        .then((resp) => { return resp.json(); })
+        .then((data) => { self.setCharityList(data) });
 
       fetch('http://localhost:3001/payments')
-        .then(function(resp) { return resp.json() })
-        .then(function(data) {
+        .then((resp) => { return resp.json() })
+        .then((data) => {
           self.props.dispatch({
             type: 'UPDATE_TOTAL_DONATE',
             amount: summaryDonations(data.map((item) => (item.amount))),
