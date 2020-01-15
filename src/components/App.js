@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import fetch from 'isomorphic-fetch';
 import { summaryDonations } from '../utils/utils';
+import { handlePay } from '../api/index';
 import { Text } from '../components/Atoms/typography/text';
 import { HeadLine } from '../components/Atoms/typography/head-line';
 import  { DonateStatus } from '../components/Organisms/donate/donateStatus';
@@ -124,34 +125,3 @@ export default connect((state) => state)(
     }
   }
 );
-
-function handlePay(id, amount, currency) {
-  const self = this;
-  return function() {
-    fetch('http://localhost:3001/payments', {
-      method: 'POST',
-      headers: { 'Content-type' : 'application/json' },
-      body: `{
-        "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}"
-      }`,
-    })
-      .then(function(resp) { return resp.json(); })
-      .then(function() {
-        self.props.dispatch({
-          type: 'UPDATE_TOTAL_DONATE',
-          amount,
-        });
-        self.props.dispatch({
-          type: 'UPDATE_MESSAGE',
-          message: `Thanks for donate ${amount}!`,
-        });
-
-        setTimeout(function() {
-          self.props.dispatch({
-            type: 'UPDATE_MESSAGE',
-            message: '',
-          });
-        }, 2000);
-      });
-  }
-}
